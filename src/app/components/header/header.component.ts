@@ -65,12 +65,68 @@ export class HeaderComponent implements OnInit {
     });
   }
 
+  /**
+   * Check for new updated notifications and load them function
+   */
   private checkForNotificationsUpdate() {
     this.notificationsService.notificationsUpdatedChecker.subscribe(time => {
       this.notificationsService.removeNotifications();
-      const newFakeData = [{notifications: [{}, {}, {}, {}]}];
-      // @todo
+      this.isLoadingNotifications = true;
+      const newFakeData = [{
+        notifications: [{
+          id: 1252,
+          type: 'text',
+          title: 'New Test notification',
+          text: 'New Test text notification',
+          expires: 314
+        },
+          {
+            id: 3512,
+            type: 'bonus',
+            title: 'Winner!',
+            requirement: 'Deposit $100 to win',
+            expires: 1423
+          },
+          {
+            id: 2212,
+            type: 'Promotion',
+            image: 'https://www.freeiconspng.com/uploads/leistungen-promotion-icon-png-0.png',
+            title: '%30 off on sports betting',
+            link: 'https://www.google.com/'
+          },
+          {
+            id: 1235,
+            type: 'Promotion',
+            image: 'https://www.freeiconspng.com/uploads/leistungen-promotion-icon-png-0.png',
+            title: '%50 off on sports betting',
+            link: 'https://www.google.com/'
+          }
+        ]
+      }];
+
+      this.getNewUpdatedNotifications(newFakeData);
     });
+  }
+
+  /**
+   * Get new updated notifications
+   *
+   * @param {Notifications[] | any} newFakeData
+   */
+  private getNewUpdatedNotifications(newFakeData: Notification[] | any) {
+    const localNotifications = this.notificationsService.getLocalNotifications();
+    if (localNotifications && localNotifications.length) {
+      this.notifications = localNotifications;
+    } else {
+      this.notificationsService.fetchNewFakeNotifications(newFakeData).then(function (res) {
+        if (res && res.length) {
+          this.notifications = res;
+          this.isLoadingNotifications = false;
+          this.checkForNotificationsLength();
+          this.checkForNotificationsUpdate();
+        }
+      }.bind(this));
+    }
   }
 
   /**

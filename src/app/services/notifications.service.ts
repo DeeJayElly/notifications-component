@@ -35,6 +35,18 @@ export class NotificationsService {
   }
 
   /**
+   * Retrieve all notifications from api endpoint function
+   *
+   * @param {Notification[]} newFakeNotifications
+   */
+  public async fetchNewFakeNotifications(newFakeNotifications: Notification[]) {
+    this.logger.log(newFakeNotifications);
+    this.setLocalNotifications(newFakeNotifications);
+    this.filterNotificationCountType();
+    return newFakeNotifications;
+  }
+
+  /**
    * Fetch notification by id function
    *
    * @param {number} id
