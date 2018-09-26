@@ -11,11 +11,10 @@ export class NotificationItemComponent implements OnInit {
   @Input() notification: any;
   public NotificationType: typeof NotificationType = NotificationType;
 
-  constructor(private notificationService: NotificationsService) {
+  constructor(private notificationsService: NotificationsService) {
   }
 
   ngOnInit() {
-    this.notification.date = new Date().toLocaleString('en-US', {hour: 'numeric', minute: 'numeric', hour12: true});
   }
 
   /**
@@ -24,8 +23,8 @@ export class NotificationItemComponent implements OnInit {
   public markAsRead(notification) {
     if (!notification.isRead && notification.type !== NotificationType.Bonus) {
       notification.isRead = !notification.isRead;
-      const currentCounter = this.notificationService.getNotificationCounter();
-      this.notificationService.updateNotificationCounter(currentCounter - 1);
+      const currentCounter = this.notificationsService.getNotificationCounter();
+      this.notificationsService.updateNotificationCounter(currentCounter - 1);
     }
   }
 }

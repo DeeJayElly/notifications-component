@@ -5,12 +5,14 @@ import {Logger} from '../shared/logger';
 import {AuthTools} from '../shared/auth.tools';
 import {environment} from '../../environments/environment';
 import {NotificationType} from '../shared/enums/notificationType';
+import {interval} from 'rxjs';
 
 @Injectable()
 export class NotificationsService {
   private apiURL = environment.api;
   private notifications: Notification[] | any;
   private notificationCounter: number;
+  public notificationsExpireChecker = interval(5000);
 
   constructor(public http: HttpClient, public logger: Logger) {
   }
@@ -56,9 +58,13 @@ export class NotificationsService {
    * @param {number} id
    */
   public removeNotification(id: number) {
-    if (id > -1 && this.notifications[id]) {
-      this.notifications.splice(id, 1);
-    }
+    const remainingNotifications = this.notifications.filter((item: Notification) => {
+      if (item.id !== id) {
+        return item;
+      }
+    });
+    this.setLocalNotifications(remainingNotifications);
+    this.updateNotificationCounter();
   }
 
   /**
@@ -76,6 +82,13 @@ export class NotificationsService {
    * @param {Notification[] | any} notifications
    */
   public setLocalNotifications(notifications: Notification[] | any) {
+    notifications.map(notification => {
+      if (!notification['notificationCreationTime']) {
+        const notificationDate = new Date();
+        notification.notificationCreationTime = notificationDate.getTime();
+        notification.date = notificationDate.toLocaleString('en-US', {hour: 'numeric', minute: 'numeric', hour12: true});
+      }
+    });
     this.notifications = notifications;
   }
 

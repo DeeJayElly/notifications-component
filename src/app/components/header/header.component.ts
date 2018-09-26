@@ -12,6 +12,7 @@ export class HeaderComponent implements OnInit {
   public notificationCount = 0;
   public notifications: Notification[] = [];
   public isLoadingNotifications = true;
+  public notificationExpired: Notification | any;
 
   constructor(public notificationsService: NotificationsService) {
   }
@@ -33,15 +34,41 @@ export class HeaderComponent implements OnInit {
         if (res && res.length) {
           this.notifications = res;
           this.isLoadingNotifications = false;
+          this.checkForNotificationsLength();
         }
       }.bind(this));
     }
   }
 
   /**
+   * Check for notifications length and remove if expired function
+   */
+  private checkForNotificationsLength() {
+    this.notificationsService.notificationsExpireChecker.subscribe(time => {
+      this.notificationExpired = this.notifications.filter((notification: Notification) => {
+        if (notification.expires && !notification['isExpired']) {
+          const currentNotificationLengthTimeMs = new Date().getTime() - notification['notificationCreationTime'];
+          const notificationExpiresAtMs = notification.expires * 1000 * 60;
+          if (currentNotificationLengthTimeMs > notificationExpiresAtMs) {
+            console.log('Notification expired');
+            notification['isExpired'] = true;
+            return notification;
+          }
+        }
+      });
+      if (this.notificationExpired.length) {
+        this.notificationExpired.map(item => {
+          this.notificationsService.removeNotification(item.id);
+        });
+      }
+    });
+  }
+
+  /**
    * Open notifications list function
    */
   public openNotificationsList() {
+    this.notifications = this.notificationsService.getLocalNotifications();
     const menuPanel = $('.mat-menu-panel');
     if (menuPanel) {
       menuPanel.css('margin-top', '20px');
