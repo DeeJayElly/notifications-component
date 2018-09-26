@@ -67,6 +67,8 @@ export class HeaderComponent implements OnInit {
 
   private checkForNotificationsUpdate() {
     this.notificationsService.notificationsUpdatedChecker.subscribe(time => {
+      this.notificationsService.removeNotifications();
+      const newFakeData = [{notifications: [{}, {}, {}, {}]}];
       // @todo
     });
   }

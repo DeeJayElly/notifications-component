@@ -13,7 +13,7 @@ export class NotificationsService {
   private notifications: Notification[] | any;
   private notificationCounter: number;
   public notificationsExpireChecker = interval(5000);
-  public notificationsUpdatedChecker = interval(30000);
+  public notificationsUpdatedChecker = interval(45000);
 
   constructor(public http: HttpClient, public logger: Logger) {
   }
@@ -66,6 +66,13 @@ export class NotificationsService {
     });
     this.setLocalNotifications(remainingNotifications);
     this.updateNotificationCounter();
+  }
+
+  /**
+   * Remove all notifications
+   */
+  public removeNotifications() {
+    this.notifications = [];
   }
 
   /**
