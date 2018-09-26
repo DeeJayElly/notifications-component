@@ -1,0 +1,34 @@
+<div *ngIf="notification" class="notification-item-inner">
+  <div class="container notification-container">
+    <div class="row notification-item-special">
+      <span *ngIf="notification.type !== NotificationType.Bonus" class="mark-as-read-btn"><button (click)="markAsRead(notification)">Mark as read</button></span>
+      <span *ngIf="!notification.isRead && notification.type !== NotificationType.Bonus" class="notification-special">New</span>
+      <span *ngIf="notification.type === NotificationType.Bonus" class="notification-special-bonus">Bonus</span>
+    </div>
+    <a *ngIf="notification.link" href="{{notification.link}}" target="_blank">
+      <div class="row notification-item-details">
+        <div class="col-3">
+          <img *ngIf="notification.image" [src]="notification.image" class="notification-item-image">
+        </div>
+        <div class="col-9">
+          <h5 *ngIf="notification.title" class="notification-item-title">{{notification.title}}</h5>
+        </div>
+      </div>
+    </a>
+    <div *ngIf="!notification.link" class="row notification-item-details">
+      <div class="col-3">
+        <img *ngIf="notification.image" [src]="notification.image" class="notification-item-image">
+      </div>
+      <div class="col-9">
+        <h5 *ngIf="notification.title" class="notification-item-title">{{notification.title}}</h5>
+        <p *ngIf="notification.text" class="notification-item-text">{{notification.text}}</p>
+        <p *ngIf="notification.requirement" class="notification-item-text">{{notification.requirement}}</p>
+      </div>
+    </div>
+    <div *ngIf="notification.date" class="row notification-item-date">
+      <div class="notification-item-time">
+        {{notification.date}}
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,129 @@
+@import url('https://fonts.googleapis.com/css?family=Varela+Round');
+@import url('https://fonts.googleapis.com/css?family=Lato:400,700');
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+#header {
+  height: 60px;
+  background: #6A98EE;
+
+  a {
+    color: inherit;
+    text-decoration: inherit;
+  }
+}
+
+.header-container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 40px;
+
+  .item {
+    font-size: 0.8rem;
+    letter-spacing: 0.1pt;
+    opacity: 0.7;
+    padding: 1rem;
+
+    i {
+      height: 1rem;
+    }
+  }
+
+  .item:hover {
+    opacity: 1;
+  }
+
+  .bell-button {
+    background: #fff;
+    border-radius: 5px;
+    height: 35px;
+    width: 35px;
+  }
+
+  .notification-icon:hover {
+    opacity: 0.7;
+  }
+
+  .notification-icon {
+    height: 1.4rem;
+    color: #999;
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    margin-top: 7px;
+  }
+}
+
+.notification-list-title {
+  background: #6A98EE;
+  margin-top: -8px;
+  padding: 8px 20px;
+
+  h4 {
+    color: #fff;
+    font-size: 1.4rem;
+    font-weight: 100;
+    text-transform: uppercase;
+    margin-bottom: 0.2rem;
+  }
+}
+
+.cdk-global-overlay-wrapper, .cdk-overlay-container {
+  top: 20px;
+}
+
+.notifications-menu {
+  margin-top: 20px !important;
+  border-radius: 5px;
+}
+
+i:hover {
+  cursor: pointer;
+}
+
+.no-link {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+.notifications-menu-text {
+  font-size: 0.8rem;
+}
+
+.notification-menu {
+  max-width: 100% !important;
+}
+
+.notification-menu .mat-menu-content {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.notification-menu-header {
+  background: #f7f7f7;
+  padding: 0.5rem;
+  border-bottom: 1px solid lightgray;
+}
+
+.mat-badge-medium.mat-badge-overlap.mat-badge-after .mat-badge-content {
+  bottom: 20px;
+}
+
+.mat-menu-panel {
+  margin-top: 20px !important;
+}
+
+.notification-item {
+  height: 95px;
+}
+
+.notification-item:hover {
+  background: #f7f7f7;
+}
+
+.notifications-spinner {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}

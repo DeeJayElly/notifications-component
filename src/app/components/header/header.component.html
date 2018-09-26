@@ -1,0 +1,20 @@
+<mat-toolbar id="header" color="primary">
+  <div class="header-container" fxLayout="row" fxLayoutAlign="start center" fxHide.lt-md>
+    <span class="bell-button" matBadge="{{notificationsService.getNotificationCounter()}}" matBadgeOverlap="true" matBadgePosition="above after" matBadgeColor="warn"
+          [matBadgeHidden]="notificationsService.getNotificationCounter() === 0"
+          (click)="openNotificationsList()" [matMenuTriggerFor]="notificationMenu">
+      <i class="fa fa-bell notification-icon"></i>
+    </span>
+    <mat-menu class="notification-menu" #notificationMenu="matMenu" yPosition="below" xPosition="before"
+              [overlapTrigger]="false"
+              (closed)="notificationListMenuClosed()">
+      <mat-spinner class="notifications-spinner" [diameter]="30" *ngIf="isLoadingNotifications"></mat-spinner>
+      <div fxLayout="row" class="notification-list-title">
+        <h4>Notifications</h4>
+      </div>
+      <div class="notification-item" *ngFor="let notification of notifications">
+        <app-notification-item [notification]="notification"></app-notification-item>
+      </div>
+    </mat-menu>
+  </div>
+</mat-toolbar>
