@@ -35,6 +35,7 @@ export class HeaderComponent implements OnInit {
           this.notifications = res;
           this.isLoadingNotifications = false;
           this.checkForNotificationsLength();
+          this.checkForNotificationsUpdate();
         }
       }.bind(this));
     }
@@ -61,6 +62,12 @@ export class HeaderComponent implements OnInit {
           this.notificationsService.removeNotification(item.id);
         });
       }
+    });
+  }
+
+  private checkForNotificationsUpdate() {
+    this.notificationsService.notificationsUpdatedChecker.subscribe(time => {
+      // @todo
     });
   }
 

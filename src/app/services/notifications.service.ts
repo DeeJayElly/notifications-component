@@ -13,6 +13,7 @@ export class NotificationsService {
   private notifications: Notification[] | any;
   private notificationCounter: number;
   public notificationsExpireChecker = interval(5000);
+  public notificationsUpdatedChecker = interval(30000);
 
   constructor(public http: HttpClient, public logger: Logger) {
   }
